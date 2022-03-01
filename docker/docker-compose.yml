@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+
+  mongo:
+    image: mongo
+    container_name: "devops_mongo"
+    restart: always
+    labels:
+      description: MongoDB
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Zaq!Xsw2
+    ports:
+      - "27017:27017"
+    volumes:
+      - nosqlVolume:/data/db
+    networks:
+      - rede_devops
+    
+  mssql:
+    image: mcr.microsoft.com/mssql/server
+    container_name: "devops_mssql"
+    restart: always
+    labels:
+      description: MS SQL Server Developer
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Zaq!Xsw2
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlVolume:/var/opt/mssql
+    networks:
+      - rede_devops
+
+networks: 
+  rede_devops:
+      driver: bridge
+
+volumes:
+  sqlVolume:
+    external: true
+  nosqlVolume:
+    external: true
